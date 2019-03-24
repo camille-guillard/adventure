@@ -6,8 +6,8 @@ public enum CommandEnum {
 	TOURNER_DROITE(2, "D"),
 	TOURNER_GAUCHE(3, "G");
 	
-	private int id;
-	private String command;
+	private final int id;
+	private final String command;
 	
 	private CommandEnum (final int id, final String command) {
 		this.id = id;
