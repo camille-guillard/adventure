@@ -10,7 +10,7 @@ public class Main {
 		IMapService mapService = new MapServiceImpl();
 		
 		// Initialisation
-		WorldMap worldMap = mapService.initMap("src/main/resources/config2.properties");
+		WorldMap worldMap = mapService.initMap("src/main/resources/input/config2.properties");
 		
 		//Afficher la map après initialisation
 		mapService.printMap(worldMap);
@@ -19,7 +19,7 @@ public class Main {
 		mapService.runMap(worldMap);
 				
 		// Exporter le résultat
-		mapService.exportMapState(worldMap, "src/main/resources/result.txt");
+		mapService.exportMapState(worldMap, "src/main/resources/output/result.txt");
 	}
 
 }

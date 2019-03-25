@@ -12,16 +12,21 @@ public class SouthDirection implements IDirection {
 
 	@Override
 	public IDirection turnRight() {
-		return new EastDirection();
+		return new WestDirection();
 	}
 
 	@Override
 	public IDirection turnLeft() {
-		return new WestDirection();
+		return new EastDirection();
 	}
 	
 	@Override
 	public String toString() {
 		return "SUD";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this.getClass().equals(obj.getClass());
 	}
 }
