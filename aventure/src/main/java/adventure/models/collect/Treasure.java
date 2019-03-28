@@ -1,20 +1,16 @@
 package adventure.models.collect;
 
+import adventure.models.adventurer.Position;
+
 public class Treasure {
-	private Integer initialX;
-	private Integer initialY;
+	private Position initialPosition;
 	
 	public Treasure(Integer x, Integer y) {
-		this.initialX = x;
-		this.initialY = y;
+		this.initialPosition = new Position(x, y);
 	}
 
-	public Integer getInitialX() {
-		return initialX;
-	}
-
-	public Integer getInitialY() {
-		return initialY;
+	public Position getInitialPosition() {
+		return initialPosition;
 	}
 	
 }

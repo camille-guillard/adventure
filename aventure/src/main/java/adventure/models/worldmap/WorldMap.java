@@ -26,7 +26,7 @@ public class WorldMap {
 		world = new WorldBox[width][height];
 		for(int i=0; i < world.length; i++) {
 			for(int j=0; j < world[i].length; j++) {
-				world[i][j] = new WorldBox(CaseTypeEnum.PLAINE);
+				world[i][j] = new WorldBox(i, j, CaseTypeEnum.PLAINE);
 			}
 		}
 	}

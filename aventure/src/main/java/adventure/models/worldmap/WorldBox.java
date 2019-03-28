@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adventure.enums.CaseTypeEnum;
+import adventure.models.adventurer.Position;
 import adventure.models.collect.Treasure;
 
 public class WorldBox {
+	private Position position;
 	private Boolean occupied;
 	private CaseTypeEnum caseType;
 	private List<Treasure> treasures;
 	
-	public WorldBox(CaseTypeEnum caseType) {
+	public WorldBox(Integer x, Integer y, CaseTypeEnum caseType) {
+		this.position = new Position(x, y);
 		this.occupied = false;
 		this.caseType = caseType;
 		treasures = new ArrayList<>();
@@ -40,5 +43,9 @@ public class WorldBox {
 	public void setCaseType(CaseTypeEnum caseType) {
 		this.caseType = caseType;
 	}
-		
+
+	public Position getPosition() {
+		return position;
+	}
+
 }
