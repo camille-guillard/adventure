@@ -12,6 +12,7 @@ import org.junit.Test;
 import adventure.enums.CaseTypeEnum;
 import adventure.enums.CommandEnum;
 import adventure.models.adventurer.Adventurer;
+import adventure.models.adventurer.Player;
 import adventure.models.adventurer.behavior.impl.EastDirection;
 import adventure.models.adventurer.behavior.impl.NorthDirection;
 import adventure.models.adventurer.behavior.impl.SouthDirection;
@@ -22,7 +23,7 @@ import adventure.services.IMapService;
 import adventure.services.impl.MapServiceImpl;
 
 
-public class AdventurerTest {
+public class AdventureTest {
 
 	IMapService mapService = new MapServiceImpl();
 	
@@ -33,23 +34,23 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 1;
-		Adventurer adventurer = new Adventurer("a", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,2);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertFalse(worldMap.getWorldBox(x, y-1).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Test de la position x
-		Assert.assertTrue(adventurer.getY().equals(y-1)); // Test de la position y
+		Assert.assertTrue(player.getX().equals(x)); // Test de la position x
+		Assert.assertTrue(player.getY().equals(y-1)); // Test de la position y
 		Assert.assertFalse(worldMap.getWorldBox(x, y).isOccupied());  // Case de départ libérée
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied()); // Case occupé par le personnage
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied()); // Case occupé par le personnage
 	}
 	
 	@Test
@@ -59,23 +60,23 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,2);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertFalse(worldMap.getWorldBox(x, y+1).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 			
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Test de la position x
-		Assert.assertTrue(adventurer.getY().equals(y+1)); // Test de la position y
+		Assert.assertTrue(player.getX().equals(x)); // Test de la position x
+		Assert.assertTrue(player.getY().equals(y+1)); // Test de la position y
 		Assert.assertFalse(worldMap.getWorldBox(x, y).isOccupied()); // Case de départ libérée
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied()); // Case occupé par le personnage
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied()); // Case occupé par le personnage
 	}
 	
 	@Test
@@ -85,23 +86,23 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(2,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertFalse(worldMap.getWorldBox(x+1, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x+1)); // Test de la position x
-		Assert.assertTrue(adventurer.getY().equals(y)); // Test de la position y
+		Assert.assertTrue(player.getX().equals(x+1)); // Test de la position x
+		Assert.assertTrue(player.getY().equals(y)); // Test de la position y
 		Assert.assertFalse(worldMap.getWorldBox(x, y).isOccupied()); // Case de départ libérée
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied()); // Case occupé par le personnage
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied()); // Case occupé par le personnage
 	}
 	
 	@Test
@@ -111,23 +112,23 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 1;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(2,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertFalse(worldMap.getWorldBox(x-1, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 			
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x-1)); // Test de la position x
-		Assert.assertTrue(adventurer.getY().equals(y)); // Test de la position y
+		Assert.assertTrue(player.getX().equals(x-1)); // Test de la position x
+		Assert.assertTrue(player.getY().equals(y)); // Test de la position y
 		Assert.assertFalse(worldMap.getWorldBox(x, y).isOccupied()); // Case de départ libérée
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied()); // Case occupé par le personnage
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied()); // Case occupé par le personnage
 	}
 	
 	@Test
@@ -137,18 +138,18 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 1;
-		Adventurer adventurer = new Adventurer("a", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,2);
 		worldMap.getWorldBox(0, 0).setCaseType(CaseTypeEnum.MONTAGNE);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 				
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Personnage bloqué par la montagne
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Personnage bloqué par la montagne
+		Assert.assertTrue(player.getY().equals(y));
 	}
 	
 	@Test
@@ -158,18 +159,18 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,2);
 		worldMap.getWorldBox(0, 1).setCaseType(CaseTypeEnum.MONTAGNE);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Personnage bloqué par la montagne
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Personnage bloqué par la montagne
+		Assert.assertTrue(player.getY().equals(y));
 	}
 	
 	@Test
@@ -179,18 +180,18 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 1;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(2,1);
 		worldMap.getWorldBox(0, 0).setCaseType(CaseTypeEnum.MONTAGNE);
-		worldMap.setAdventurers(Arrays.asList(adventurer));	
+		worldMap.setPlayers(Arrays.asList(player));	
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Personnage bloqué par la montagne
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Personnage bloqué par la montagne
+		Assert.assertTrue(player.getY().equals(y));
 	}
 	
 	@Test
@@ -200,18 +201,18 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(2,1);
 		worldMap.getWorldBox(1, 0).setCaseType(CaseTypeEnum.MONTAGNE);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Personnage bloqué par la montagne
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Personnage bloqué par la montagne
+		Assert.assertTrue(player.getY().equals(y));
 	}
 		
 	@Test
@@ -221,17 +222,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x));  // Le personnage ne peut pas se déplacer à l'exterieur de la map
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x));  // Le personnage ne peut pas se déplacer à l'exterieur de la map
+		Assert.assertTrue(player.getY().equals(y));
 	}
 	
 	@Test
@@ -241,17 +242,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Le personnage ne peut pas se déplacer à l'exterieur de la map
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Le personnage ne peut pas se déplacer à l'exterieur de la map
+		Assert.assertTrue(player.getY().equals(y));
 	}
 	
 	@Test
@@ -261,17 +262,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Le personnage ne peut pas se déplacer à l'exterieur de la map
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Le personnage ne peut pas se déplacer à l'exterieur de la map
+		Assert.assertTrue(player.getY().equals(y));
 	}
 	
 	@Test
@@ -281,125 +282,125 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Le personnage ne peut pas se déplacer à l'exterieur de la map
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Le personnage ne peut pas se déplacer à l'exterieur de la map
+		Assert.assertTrue(player.getY().equals(y));
 	}
 	
 	@Test
-	public void testNorthDirectionMoveToAdventurer(){
-		System.out.println("------ TEST NORTH DIRECTION MOVE TO A OTHER ADVENTURER ------\n");
+	public void testNorthDirectionMoveToPlayer(){
+		System.out.println("------ TEST NORTH DIRECTION MOVE TO A OTHER PLAYER ------\n");
 		
 		/* Initialisation */
 		int x = 0;
 		int y = 1;
-		Adventurer adventurer = new Adventurer("a", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
-		Adventurer adventurer2 = new Adventurer("a", x, y-1, new NorthDirection(), new ArrayList<>());
+		Player player = new Player("p", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player2 = new Player("p", x, y-1, new NorthDirection(), new ArrayList<>());
 		WorldMap worldMap = new WorldMap(1,2);
-		worldMap.setAdventurers(Arrays.asList(adventurer, adventurer2));
+		worldMap.setPlayers(Arrays.asList(player, player2));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertTrue(worldMap.getWorldBox(x, y-1).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 				
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
+		Assert.assertTrue(player.getY().equals(y));
 		Assert.assertTrue(worldMap.getWorldBox(x, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 	}
 	
 	@Test
-	public void testSouthDirectionMoveToAdventurer(){
-		System.out.println("------ TEST SOUTH DIRECTION MOVE TO A OTHER ADVENTURER ------\n");
+	public void testSouthDirectionMoveToplayer(){
+		System.out.println("------ TEST SOUTH DIRECTION MOVE TO A OTHER PLAYER ------\n");
 		
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
-		Adventurer adventurer2 = new Adventurer("a", x, y+1, new NorthDirection(), new ArrayList<>());
+		Player player = new Player("p", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player2 = new Player("p", x, y+1, new NorthDirection(), new ArrayList<>());
 		WorldMap worldMap = new WorldMap(1,2);
-		worldMap.setAdventurers(Arrays.asList(adventurer, adventurer2));
+		worldMap.setPlayers(Arrays.asList(player, player2));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertTrue(worldMap.getWorldBox(x, y+1).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 			
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
+		Assert.assertTrue(player.getY().equals(y));
 		Assert.assertTrue(worldMap.getWorldBox(x, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 	}
 	
 	@Test
-	public void testEastDirectionMoveToAdventurer(){
-		System.out.println("------ TEST EAST DIRECTION MOVE TO A OTHER ADVENTURER ------\n");
+	public void testEastDirectionMoveToplayer(){
+		System.out.println("------ TEST EAST DIRECTION MOVE TO A OTHER PLAYER ------\n");
 		
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
-		Adventurer adventurer2 = new Adventurer("a", x+1, y, new NorthDirection(), new ArrayList<>());
+		Player player = new Player("p", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player2 = new Player("p", x+1, y, new NorthDirection(), new ArrayList<>());
 		WorldMap worldMap = new WorldMap(2,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer, adventurer2));
+		worldMap.setPlayers(Arrays.asList(player, player2));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertTrue(worldMap.getWorldBox(x+1, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
+		Assert.assertTrue(player.getY().equals(y));
 		Assert.assertTrue(worldMap.getWorldBox(x, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 	}
 	
 	@Test
-	public void testWestDirectionMoveToAdventurer(){
-		System.out.println("------ TEST WEST DIRECTION MOVE TO A OTHER ADVENTURER ------\n");
+	public void testWestDirectionMoveToplayer(){
+		System.out.println("------ TEST WEST DIRECTION MOVE TO A OTHER PLAYER ------\n");
 		
 		/* Initialisation */
 		int x = 1;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
-		Adventurer adventurer2 = new Adventurer("a", x-1, y, new NorthDirection(), new ArrayList<>());
+		Player player = new Player("p", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player2 = new Player("p", x-1, y, new NorthDirection(), new ArrayList<>());
 		WorldMap worldMap = new WorldMap(2,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer, adventurer2));
+		worldMap.setPlayers(Arrays.asList(player, player2));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
 		Assert.assertTrue(worldMap.getWorldBox(x-1, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 			
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		Assert.assertTrue(adventurer.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
-		Assert.assertTrue(adventurer.getY().equals(y));
+		Assert.assertTrue(player.getX().equals(x)); // Le personnage ne peut pas se déplacer vers une case occupé
+		Assert.assertTrue(player.getY().equals(y));
 		Assert.assertTrue(worldMap.getWorldBox(x, y).isOccupied());
-		Assert.assertTrue(worldMap.getWorldBox(adventurer.getX(), adventurer.getY()).isOccupied());
+		Assert.assertTrue(worldMap.getWorldBox(player.getX(), player.getY()).isOccupied());
 	}
 	
 	@Test
@@ -409,17 +410,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
+		Player player = new Player("p", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new EastDirection())); // NORD + TURN RIGHT -> EST
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new EastDirection())); // NORD + TURN RIGHT -> EST
 	}
 	
 	@Test
@@ -429,17 +430,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
+		Player player = new Player("p", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new WestDirection())); // SOUTH + TURN RIGHT -> WEST
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new WestDirection())); // SOUTH + TURN RIGHT -> WEST
 	}
 	
 	@Test
@@ -449,17 +450,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
+		Player player = new Player("p", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new SouthDirection())); // EAST + TURN RIGHT -> SOUTH
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new SouthDirection())); // EAST + TURN RIGHT -> SOUTH
 	}
 	
 	@Test
@@ -469,17 +470,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
+		Player player = new Player("p", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_DROITE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new NorthDirection())); // WEST + TURN RIGHT -> NORTH
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new NorthDirection())); // WEST + TURN RIGHT -> NORTH
 	}	
 	
 	@Test
@@ -489,17 +490,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
+		Player player = new Player("p", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new WestDirection())); // NORTH + TURN LEFT -> WEST
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new WestDirection())); // NORTH + TURN LEFT -> WEST
 	}
 	
 	@Test
@@ -509,17 +510,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
+		Player player = new Player("p", x, y, new SouthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new EastDirection())); // SOUTH + TURN LEFT -> EAST
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new EastDirection())); // SOUTH + TURN LEFT -> EAST
 	}
 	
 	@Test
@@ -529,17 +530,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
+		Player player = new Player("p", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new NorthDirection())); // EAST + TURN LEFT -> NORTH
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new NorthDirection())); // EAST + TURN LEFT -> NORTH
 	}
 	
 	@Test
@@ -549,17 +550,17 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 0;
 		int y = 0;
-		Adventurer adventurer = new Adventurer("a", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
+		Player player = new Player("p", x, y, new WestDirection(), new LinkedList<>(Arrays.asList(CommandEnum.TOURNER_GAUCHE)));
 		WorldMap worldMap = new WorldMap(1,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		worldMap.setPlayers(Arrays.asList(player));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Execution de l'opération */
 		mapService.runMap(worldMap);
 		
 		/* Tests après execution */
-		assertNotNull(adventurer.getDirection());
-		Assert.assertTrue(adventurer.getDirection().equals(new SouthDirection())); // WEST + TURN LEFT -> SOUTH
+		assertNotNull(player.getDirection());
+		Assert.assertTrue(player.getDirection().equals(new SouthDirection())); // WEST + TURN LEFT -> SOUTH
 	}
 	
 	@Test
@@ -571,8 +572,8 @@ public class AdventurerTest {
 		int y = 0;
 		Adventurer adventurer = new Adventurer("a", x, y, new EastDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(2,1);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
-		worldMap.getWorldBox(1, 0).setTreasures(new LinkedList<>(Arrays.asList(new Treasure(), new Treasure())));
+		worldMap.setPlayers(Arrays.asList(adventurer));
+		worldMap.getWorldBox(1, 0).setTreasures(new LinkedList<>(Arrays.asList(new Treasure(1, 0), new Treasure(1, 0))));
 		mapService.printMap(worldMap); //affichage de la map après initialisation
 		
 		/* Tests après initialisation */
@@ -595,20 +596,48 @@ public class AdventurerTest {
 		/* Initialisation */
 		int x = 100;
 		int y = 100;
-		Adventurer adventurer = new Adventurer("a", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
+		Player player = new Player("p", x, y, new NorthDirection(), new LinkedList<>(Arrays.asList(CommandEnum.AVANCER)));
 		WorldMap worldMap = new WorldMap(1,2);
-		worldMap.setAdventurers(new LinkedList<>(Arrays.asList(adventurer)));
+		worldMap.setPlayers(new LinkedList<>(Arrays.asList(player)));
 		
 		/* Test : personnage placé à l'exterieur de la map */
-		Assert.assertEquals(0, worldMap.getAdventurers().size());
+		Assert.assertEquals(0, worldMap.getPlayers().size());
 		
-		adventurer.setX(0);
-		adventurer.setY(0);
-		worldMap.setAdventurers(Arrays.asList(adventurer));
+		player.setX(0);
+		player.setY(0);
+		worldMap.setPlayers(Arrays.asList(player));
 		
 		/* Test : personnage placé dans les bornes de la map */
-		Assert.assertEquals(1, worldMap.getAdventurers().size());
+		Assert.assertEquals(1, worldMap.getPlayers().size());
 
+	}
+	
+	@Test
+	public void testMain1(){
+		// Initialisation
+		WorldMap worldMap = mapService.initMap("src/test/resources/input/test1.properties");
+		
+		/* Tests après initialisation */
+		Assert.assertEquals(1, worldMap.getPlayers().size());
+		Assert.assertEquals("Lara".toLowerCase(), worldMap.getPlayers().get(0).getName().toLowerCase()); // player[0] -> nom lara
+		Assert.assertTrue(worldMap.getPlayers().get(0).getX().equals(1)); // Lara x = 1
+		Assert.assertTrue(worldMap.getPlayers().get(0).getY().equals(1)); // Lara y = 1
+		Assert.assertEquals(CaseTypeEnum.MONTAGNE, worldMap.getWorldBox(1, 0).getCaseType()); // Case montagne
+		Assert.assertEquals(CaseTypeEnum.MONTAGNE, worldMap.getWorldBox(2, 1).getCaseType()); // Case montagne	
+		Assert.assertFalse(worldMap.getWorldBox(0, 3).getTreasures().isEmpty()); // Case tresors
+		Assert.assertEquals(worldMap.getWorldBox(0, 3).getTreasures().size(), 2); // Nombre de trésors
+		Assert.assertFalse(worldMap.getWorldBox(1, 3).getTreasures().isEmpty()); // Case tresors
+		Assert.assertEquals(worldMap.getWorldBox(1, 3).getTreasures().size(), 3); // Nombre de trésors
+				
+		//Afficher la map après initialisation
+		mapService.printMap(worldMap);
+				
+		// Exécution des mouvements
+		mapService.runMap(worldMap);
+		
+		/* Tests après execution */
+		Assert.assertTrue(worldMap.getPlayers().get(0).getX().equals(0)); // Position x Lara
+		Assert.assertTrue(worldMap.getPlayers().get(0).getY().equals(3)); // Position y Lara
 	}
 
 }

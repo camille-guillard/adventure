@@ -14,6 +14,7 @@ import java.util.List;
 import adventure.enums.CaseTypeEnum;
 import adventure.enums.CommandEnum;
 import adventure.models.adventurer.Adventurer;
+import adventure.models.adventurer.Player;
 import adventure.models.adventurer.Position;
 import adventure.models.adventurer.behavior.IDirection;
 import adventure.models.adventurer.behavior.impl.EastDirection;
@@ -34,7 +35,7 @@ public class MapServiceImpl implements IMapService {
 	public WorldMap initMap(String path) {
 		WorldMap result = null;
 		
-		List<Adventurer> adventurers = new ArrayList<>();
+		List<Player> players = new ArrayList<>();
 		
 		try{
 			InputStream flux=new FileInputStream(path); 
@@ -79,8 +80,8 @@ public class MapServiceImpl implements IMapService {
 								commandsEnum.add(CommandEnum.getEnumByCommand(String.valueOf(commands.charAt(i))));
 							}
 							
-							Adventurer adventurer = new Adventurer(name, x, y, directionState, commandsEnum);
-							adventurers.add(adventurer);
+							Player adventurer = new Adventurer(name, x, y, directionState, commandsEnum);
+							players.add(adventurer);
 							
 							if(result != null) {
 								WorldBox box = result.getWorldBox(adventurer.getPosition());
@@ -99,7 +100,7 @@ public class MapServiceImpl implements IMapService {
 							
 							List<Treasure> treasures = result.getWorldBox(x, y).getTreasures();
 							for(int i = 0; i < nb; i++) {
-								treasures.add(new Treasure());
+								treasures.add(new Treasure(x, y));
 							}
 							break;
 						case "M" : 
@@ -113,7 +114,7 @@ public class MapServiceImpl implements IMapService {
 						default: break;
 					}
 					
-					result.setAdventurers(adventurers);
+					result.setPlayers(players);
 
 				} catch (ArrayIndexOutOfBoundsException e) {
 					e.toString();
@@ -143,9 +144,10 @@ public class MapServiceImpl implements IMapService {
 					for(int j = 0; j < worldMap.getWidth(); j++) {				
 						Boolean b = false;
 						
-						for(Adventurer a : worldMap.getAdventurers()){
-							if(a.getX().equals(j) && a.getY().equals(i)) {
-								System.out.format("A(%s)\t\t\t", a.getName());
+						for(Player p : worldMap.getPlayers()){
+							if(p.getX().equals(j) && p.getY().equals(i)) {
+								if(p instanceof Adventurer) System.out.format("A(%s)\t\t\t", p.getName());
+								else System.out.format("P(%s)\t\t\t", p.getName());
 								b = true;
 							}
 						}
@@ -178,13 +180,13 @@ public class MapServiceImpl implements IMapService {
 	public void runMap(WorldMap worldMap) {
 		//DEBUG
 		while(!worldMap.hasFinish()) {
-			for(Adventurer adventurer : worldMap.getAdventurers()) {
-				if(!adventurer.hasFinish()) {
-					CommandEnum command = adventurer.getCommands().remove(0);
+			for(Player player : worldMap.getPlayers()) {
+				if(!player.hasFinish()) {
+					CommandEnum command = player.getCommands().remove(0);
 					switch (command.getCommand()) {	
-						case "A" : movingForward(worldMap, adventurer); break;
-						case "D" : turnRight(adventurer); break;
-						case "G" : turnLeft(adventurer); break;
+						case "A" : movingForward(worldMap, player); break;
+						case "D" : turnRight(player); break;
+						case "G" : turnLeft(player); break;
 						default : break;
 					}
 					System.out.println();
@@ -194,61 +196,61 @@ public class MapServiceImpl implements IMapService {
 		}		
 	}
 	
-	private void turnRight(Adventurer adventurer) {
-		adventurer.turnRight();
-		successTurn(adventurer);
+	private void turnRight(Player player) {
+		player.turnRight();
+		successTurn(player);
 	}
 	
-	private void turnLeft(Adventurer adventurer) {
-		adventurer.turnLeft();
-		successTurn(adventurer);
+	private void turnLeft(Player player) {
+		player.turnLeft();
+		successTurn(player);
 	}
 	
-	private void successTurn(Adventurer adventurer) {
+	private void successTurn(Player player) {
 		System.out.format("%s se tourne vers la direction %s.\n", 
-				adventurer.getName(), 
-				adventurer.getDirection().toString());
+				player.getName(), 
+				player.getDirection().toString());
 	}
 	
-	private void successMoving(Adventurer adventurer) {
+	private void successMoving(Player player) {
 		System.out.format("%s se déplace vers la case [%d, %d].\n", 
-				adventurer.getName(), 
-				adventurer.getX(), 
-				adventurer.getY());
+				player.getName(), 
+				player.getX(), 
+				player.getY());
 	}
 	
-	private void tryMovingForward(Adventurer adventurer, Position position) {
+	private void tryMovingForward(Player player, Position position) {
 		System.out.format("%s tente un déplacement vers la case [%d, %d].\n", 
-				adventurer.getName(), 
+				player.getName(), 
 				position.getX(), 
 				position.getY());
 	}
 	
-	private void movingForward(WorldMap worldMap, Adventurer adventurer) {
-		Position newPosition = adventurer.movingForward();
+	private void movingForward(WorldMap worldMap, Player player) {
+		Position newPosition = player.movingForward();
 		WorldBox newBox = worldMap.getWorldBox(newPosition);
 		if(newBox == null) {
-			tryMovingForward(adventurer, newPosition);
+			tryMovingForward(player, newPosition);
 			System.out.println("Déplacement hors des limites");
 		} else if(newBox.isOccupied()){
-			tryMovingForward(adventurer, newPosition);
+			tryMovingForward(player, newPosition);
 			System.out.println("La case est occupée");
 		} else if(newBox.getCaseType().equals(CaseTypeEnum.MONTAGNE)){
-			tryMovingForward(adventurer, newPosition);
+			tryMovingForward(player, newPosition);
 			System.out.println("Déplacement impossible sur une case montagne!");
 		} else {
 			// Libérer l'ancienne case
-			WorldBox oldBox = worldMap.getWorldBox(adventurer.getPosition());
+			WorldBox oldBox = worldMap.getWorldBox(player.getPosition());
 			oldBox.setOccupied(false);
 			
 			// Déplacement vers la nouvelle case
-			adventurer.setPosition(newPosition);
+			player.setPosition(newPosition);
 			newBox.setOccupied(true);
-			successMoving(adventurer);
+			successMoving(player);
 			
-			// Chercher trésor
-			Boolean find = adventurer.searchTreasure(newBox);
-			if(find) System.out.format("%s a trouvé un trésor!\n", adventurer.getName());
+			// Action spécifique au personnage
+			String action = player.action(worldMap);
+			if(action != null) System.out.println(action);
 		}		
 	}
 
@@ -279,14 +281,21 @@ public class MapServiceImpl implements IMapService {
 				}
 			}
 	    	
-			// Export des aventuriers
-	    	for(Adventurer adventurer : worldMap.getAdventurers()) {
-	    		writer.write(String.format("A-%s-%d-%d-%c-%d\n", 
-	    				adventurer.getName(),
-	    				adventurer.getX(),
-	    				adventurer.getY(),
-	    				adventurer.getDirection().toString().charAt(0),
-	    				adventurer.getTreasures().size())) ;
+			// Export des joueurs
+	    	for(Player player : worldMap.getPlayers()) {
+	    		if(player instanceof Adventurer) {
+	    			try {
+	    				Adventurer adventurer = (Adventurer) player;
+	    				writer.write(String.format("A-%s-%d-%d-%c-%d\n", 
+	    	    				adventurer.getName(),
+	    	    				adventurer.getX(),
+	    	    				adventurer.getY(),
+	    	    				adventurer.getDirection().toString().charAt(0),
+	    	    				adventurer.getTreasures().size())) ;
+	    			} catch(ClassCastException e) {
+	    				continue;
+	    			}	
+	    		}
 	    	}
 	    	
 	    	writer.close() ;

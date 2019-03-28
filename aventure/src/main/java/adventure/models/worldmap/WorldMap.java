@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adventure.enums.CaseTypeEnum;
-import adventure.models.adventurer.Adventurer;
+import adventure.models.adventurer.Player;
 import adventure.models.adventurer.Position;
 
 public class WorldMap {
@@ -14,7 +14,7 @@ public class WorldMap {
 		
 	private WorldBox[][] world;
 	
-	List<Adventurer> adventurers = new ArrayList<>();
+	List<Player> players = new ArrayList<>();
 	
 	public WorldMap(int width, int height) {
 		this.width = width;
@@ -67,30 +67,30 @@ public class WorldMap {
 		this.world = world;
 	}
 
-	public List<Adventurer> getAdventurers() {
-		return adventurers;
+	public List<Player> getPlayers() {
+		return players;
 	}
 
-	public void setAdventurers(List<Adventurer> adventurers) {
-		this.adventurers = adventurers;
-		validateAdventurers();
+	public void setPlayers(List<Player> players) {
+		this.players = players;
+		validatePlayers();
 	}
-	
-	private void validateAdventurers() {
+
+	private void validatePlayers() {
 		if(world != null) {
-			for(Adventurer adventurer : adventurers) {
+			for(Player player : players) {
 				try {
-					world[adventurer.getX()][adventurer.getY()].setOccupied(true);
+					world[player.getX()][player.getY()].setOccupied(true);
 				} catch (ArrayIndexOutOfBoundsException e) {
-					adventurers.remove(adventurer);
+					players.remove(player);
 				}
 			}
 		}
 	}
 	
 	public Boolean hasFinish() {
-		for(Adventurer adventurer : adventurers) {
-			if(!adventurer.hasFinish()) {
+		for(Player player : players) {
+			if(!player.hasFinish()) {
 				return false;
 			}
 		}
