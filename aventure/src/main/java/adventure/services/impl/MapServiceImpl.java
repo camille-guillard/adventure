@@ -230,7 +230,7 @@ public class MapServiceImpl implements IMapService {
 		if(newBox == null) {
 			tryMovingForward(adventurer, newPosition);
 			System.out.println("Déplacement hors des limites");
-		} else if(newBox.getOccupied()){
+		} else if(newBox.isOccupied()){
 			tryMovingForward(adventurer, newPosition);
 			System.out.println("La case est occupée");
 		} else if(newBox.getCaseType().equals(CaseTypeEnum.MONTAGNE)){

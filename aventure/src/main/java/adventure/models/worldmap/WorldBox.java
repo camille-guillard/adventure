@@ -25,7 +25,7 @@ public class WorldBox {
 		this.treasures = treasures;
 	}
 
-	public Boolean getOccupied() {
+	public Boolean isOccupied() {
 		return occupied;
 	}
 

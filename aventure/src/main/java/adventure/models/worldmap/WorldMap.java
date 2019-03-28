@@ -73,6 +73,19 @@ public class WorldMap {
 
 	public void setAdventurers(List<Adventurer> adventurers) {
 		this.adventurers = adventurers;
+		validateAdventurers();
+	}
+	
+	private void validateAdventurers() {
+		if(world != null) {
+			for(Adventurer adventurer : adventurers) {
+				try {
+					world[adventurer.getX()][adventurer.getY()].setOccupied(true);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					adventurers.remove(adventurer);
+				}
+			}
+		}
 	}
 	
 	public Boolean hasFinish() {
